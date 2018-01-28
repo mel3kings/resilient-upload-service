@@ -16,6 +16,10 @@
 
 package com.example.test.simple;
 
+import com.example.test.controller.MessagingProducer;
+import com.example.test.data.SimpleRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -28,20 +32,33 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Configuration
 @EnableAutoConfiguration
-@ComponentScan
+@ComponentScan(basePackages = "com.example.test")
 @RestController
-public class SampleSimpleApplication{
+public class SampleSimpleApplication {
+    private final static String TOPIC_NAME = "first-topic";
+    @Autowired
+    private HelloWorldService helloWorldService;
+    @Autowired
+    private MessagingProducer producer;
 
-	@Autowired
-	private HelloWorldService helloWorldService;
+    public static void main(String[] args) {
+        SpringApplication.run(SampleSimpleApplication.class, args);
+    }
 
-	public static void main(String[] args) {
-		SpringApplication.run(SampleSimpleApplication.class, args);
-	}
+    @RequestMapping(value = "/store")
+    public String upload() {
+        try {
+            System.out.println("Attempting to send message");
+            producer.sendMessage("TEST ME", TOPIC_NAME);
+            SimpleRequest request = new SimpleRequest();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return "Uploaded";
+    }
 
-
-	@RequestMapping(value = "/")
-	public String health() {
-		return "OK!" ;
-	}
+    @RequestMapping(value = "/")
+    public String health() {
+        return "OK!";
+    }
 }
