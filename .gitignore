@@ -1,0 +1,16 @@
+# Created by .ignore support plugin (hsz.mobi)
+.idea/inspectionProfiles/
+.idea/libraries/Maven__com_101tec_zkclient_0_10.xml
+.idea/libraries/Maven__com_yammer_metrics_metrics_core_2_2_0.xml
+.idea/libraries/Maven__log4j_log4j_1_2_17.xml
+.idea/libraries/Maven__net_jpountz_lz4_lz4_1_3_0.xml
+.idea/libraries/Maven__net_sf_jopt_simple_jopt_simple_5_0_4.xml
+.idea/libraries/Maven__org_apache_kafka_kafka_2_12_1_0_0.xml
+.idea/libraries/Maven__org_apache_kafka_kafka_clients_0_10_1_1.xml
+.idea/libraries/Maven__org_apache_zookeeper_zookeeper_3_4_10.xml
+.idea/libraries/Maven__org_scala_lang_scala_library_2_12_3.xml
+.idea/libraries/Maven__org_slf4j_slf4j_log4j12_1_7_25.xml
+.idea/libraries/Maven__org_xerial_snappy_snappy_java_1_1_2_6.xml
+src/test/java/
+
+target/*

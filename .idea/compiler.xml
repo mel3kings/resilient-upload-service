@@ -9,7 +9,7 @@
         <module name="resilient-upload-service" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
+    <bytecodeTargetLevel target="1.8">
       <module name="resilient-upload-service" target="1.5" />
     </bytecodeTargetLevel>
   </component>
