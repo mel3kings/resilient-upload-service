@@ -18,6 +18,8 @@ package com.example.test.simple;
 
 import com.example.test.controller.MessagingProducer;
 import com.example.test.data.SimpleRequest;
+import com.example.test.dto.UploadRequest;
+import com.example.test.dto.UploadResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +29,13 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import com.example.test.simple.service.HelloWorldService;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 @Configuration
 @EnableAutoConfiguration
@@ -55,6 +62,13 @@ public class SampleSimpleApplication {
             ex.printStackTrace();
         }
         return "Uploaded";
+    }
+    @RequestMapping(value = "/upload", consumes = {MediaType.APPLICATION_JSON_VALUE}, method = RequestMethod.POST)
+    public UploadResponse uploadData(@Valid @RequestBody UploadRequest uploadRequest){
+        System.out.println("Recieved Request " + uploadRequest);
+        UploadResponse response = new UploadResponse();
+        response.setMessage("PROCESSING");
+        return response;
     }
 
     @RequestMapping(value = "/")
