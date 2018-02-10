@@ -7,7 +7,7 @@ import grails.converters.*
 class HelloController {
 	static responseFormats = ['json', 'xml']
 	
-def index() {
-    render "Hello world!"
-}
+    def index() {
+        render "Hello world!"
+    }
 }
