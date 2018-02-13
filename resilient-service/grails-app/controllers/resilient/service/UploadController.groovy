@@ -3,12 +3,16 @@ package resilient.service
 import grails.rest.*
 import grails.converters.*
 
+import javax.annotation.PostConstruct
+import javax.annotation.PreDestroy
+
 class UploadController {
     def uploadService = new UploadService()
 	static responseFormats = ['json', 'xml', 'application/html']
     static allowedMethods = [index:'GET',
-                             send:['POST'],
-                            sample:'GET']
+                             send:'POST',
+                             sample:'GET',
+                             load:'GET']
     def index() {
         render "OK!"
     }
@@ -19,9 +23,14 @@ class UploadController {
     def send(){
         System.out.println("Receiving request")
         def UploadRequest = request.JSON
-        uploadService.serviceMethod(UploadRequest)
+        uploadService.send(UploadRequest)
 
         def UploadResponse = new UploadResponse(status: "OK", message: "Request has been received")
         render UploadResponse as JSON
       }
+    def load(){
+        uploadService.load()
+        render "DONE"
+    }
+
 }

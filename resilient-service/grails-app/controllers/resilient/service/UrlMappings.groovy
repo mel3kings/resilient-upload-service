@@ -6,7 +6,7 @@ class UrlMappings {
         get "/$controller/$action"()
         get "/$controller?"(action:"index")
         post "/$controller/$action"()
-        "/"(controller: 'application', action:'index')
+        "/"(controller: 'upload', action:'index')
         "500"(view: '/error')
         "404"(view: '/notFound')
     }
