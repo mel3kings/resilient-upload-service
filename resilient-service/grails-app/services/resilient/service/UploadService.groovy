@@ -13,8 +13,9 @@ class UploadService implements InitializingBean {
     def topicName = 'first-topic'
     def kafkaServer = '192.168.99.100'
     def producerProperties = [:], consumerProperties = [:]
+    static def cache = [:]
     def kafkaProducer
-
+    def consumer
     void afterPropertiesSet() {
         producerProperties["bootstrap.servers"] = kafkaServer + ':9092'
         producerProperties["serializer.class"] = 'kafka.serializer.DefaultEncoder'
@@ -27,7 +28,13 @@ class UploadService implements InitializingBean {
         consumerProperties.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
         consumerProperties.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
         consumerProperties.put("group.id", topicName)
-     //   consumerProperties.put("partition.assignment.strategy", "roundrobin")
+        def defaultFactory = new DefaultKafkaConsumerFactory(consumerProperties, new StringDeserializer(), new StringDeserializer())
+        ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(defaultFactory)
+
+        consumer= factory.getConsumerFactory().createConsumer()
+        consumer.subscribe(Arrays.asList(topicName))
+
     }
 
     def send(message) {
@@ -35,22 +42,18 @@ class UploadService implements InitializingBean {
         kafkaProducer.send(record)
     }
 
-    def load() {
-        def defaultFactory = new DefaultKafkaConsumerFactory(consumerProperties, new StringDeserializer(), new StringDeserializer())
-        ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(defaultFactory)
 
-        def  consumer= factory.getConsumerFactory().createConsumer()
-        consumer.subscribe(Arrays.asList(topicName))
-        while (true) {
+    def load() {
+        System.out.println("Checking for messages..")
             def consumerRecords = consumer.poll(3000)
             for(item in consumerRecords){
                 println(item)
+                cache.put(item.offset(), item.value())
                 println("VALUE: " + item.value())
             }
-            Thread.sleep(3000)
-            System.out.println("iterating..")
-
         }
+
+    def retrieve(id){
+        return cache.get(id)
     }
 }
