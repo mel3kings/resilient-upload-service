@@ -8,6 +8,7 @@
 * Apache Kafka - Messaging Queue for queueing all incoming request, this enables us to handle large amount of request
 * Grails - also known as Groovy on Grails, language focused more on the logic, rather than plumbing
 * Docker - for creating images of the application, and run containers based on said images
+* Gradle - Dependency Management
  
  ### Implementations Notes
  Concepts introduced to make sure our application is resilient:
@@ -23,12 +24,13 @@ ideal scenario, we put the request on hold for a number of time before actually 
  
 ###Known Issues
  * With the throttling enabled, some request might not receive an immediate response, this is the original design to hold the request
- * This a bare-bone application, nothing is actually done by the service after it has received the request. Perhaps it can be part 2 
+ * This a bare-bone application, nothing is actually done by the service after it has received the request. Perhaps it can be part 2
+ * Folder structure of project is not ideal
+
  ### Room For improvement
  * You can load the amount of brokers in Kafka to handle more Request
  * You can tweak the throttling for more optimization, rather than waiting we can have them retry again later
- * 
-
+ 
  ### Running 
  Running Grails app (under resilient-service folder)
  ```
