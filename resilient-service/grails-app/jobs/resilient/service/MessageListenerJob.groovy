@@ -8,6 +8,5 @@ class MessageListenerJob {
 
     def execute() {
         uploadService.load()
-        // execute job
     }
 }
