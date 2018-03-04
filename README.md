@@ -1,8 +1,7 @@
   Resilient Service
 
  # Architectual Notes
- 
- <Pending Design Picture>
+ ![alt text](https://github.com/mel3kings/resilient-upload-service/blob/master/resilient-service/architectures.png)
   
  ## Technology Stack
 * Apache Kafka - Messaging Queue for queueing all incoming request, this enables us to handle large amount of request
@@ -22,13 +21,13 @@ ideal scenario, we put the request on hold for a number of time before actually 
  * Asynchronous Processing - In order for the the user to know the actual status of his request he has to perform a subsequent 
  call with a corresponding  id to the service again to actually see the status. 
  
-###Known Issues
+### Known Issues
  * With the throttling enabled, some request might not receive an immediate response, this is the original design to hold the request
  * This a bare-bone application, nothing is actually done by the service after it has received the request. Perhaps it can be part 2
  * Folder structure of project is not ideal
 
  ### Room For improvement
- * You can load the amount of brokers in Kafka to handle more Request
+ * You can change the amount of brokers in Kafka to handle more Request
  * You can tweak the throttling for more optimization, rather than waiting we can have them retry again later
  
  ### Running 
@@ -56,9 +55,9 @@ http://localhost:8080/upload/send
 Request Body
 ```
 {
-  "location":"deskto123p",
-  "type":"sample1231",
-  "description":"Sample REALTIME NEW"
+  "location":"desktop",
+  "type":"sample",
+  "description":"Sample NEW"
 }
 ```
 
