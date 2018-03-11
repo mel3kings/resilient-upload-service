@@ -12,18 +12,19 @@ import org.springframework.kafka.core.DefaultKafkaConsumerFactory
 class UploadService implements InitializingBean {
     def topicName = 'first-topic'
     def kafkaServer = '192.168.99.100'
+    def port = '9092'
     def producerProperties = [:], consumerProperties = [:]
     static def cache = [:]
     def kafkaProducer
     def consumer
     void afterPropertiesSet() {
-        producerProperties["bootstrap.servers"] = kafkaServer + ':9092'
+        producerProperties["bootstrap.servers"] = kafkaServer + ':' + port
         producerProperties["serializer.class"] = 'kafka.serializer.DefaultEncoder'
         producerProperties["key.serializer"] = 'org.apache.kafka.common.serialization.StringSerializer'
         producerProperties["value.serializer"] = 'org.apache.kafka.common.serialization.StringSerializer'
         kafkaProducer = new KafkaProducer(producerProperties)
 
-        consumerProperties.put("bootstrap.servers", kafkaServer + ":9092")
+        consumerProperties.put("bootstrap.servers", kafkaServer + ":" + port)
 
         consumerProperties.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
         consumerProperties.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
